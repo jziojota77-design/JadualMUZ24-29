@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Jadual Kuliah Muzik 24/29</title>
+  <style>
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 10px;
+    background:#f5f5f5;
+    margin: 0;
+  }
+
+  h1,h2,h3 {
+    text-align:center;
+    margin: 4px 0 12px;
+  }
+
+  .bulan {
+    margin-top: 1em;
+    text-align: center;
+  }
+
+  .tarikh {
+    font-size: 24px;
+    margin: 0 0 0.5em;
+  }
+
+  .home {
+    display: inline-block;
+    padding: 8px 14px;
+    background: #2980b9;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 14px;
+    margin-bottom: 1em;
+  }
+
+  /* wrapper untuk scroll jadual di mobile */
+  .table-container {
+    overflow-x: auto;
+    margin-top: 12px;
+  }
+
+  table {
+    width: 100%;
+    min-width: 700px; /* supaya kolum tak terlalu sempit */
+    border-collapse: collapse;
+    background:#fff;
+    box-shadow:0 4px 8px rgba(0,0,0,0.08);
+  }
+
+  th, td {
+    border:1px solid #000000;
+    padding:8px;
+    text-align:center;
+    min-width:90px;
+    vertical-align:middle;
+    font-size: 14px;
+  }
+
+  th {
+    background:#2c3e50;
+    color:#fff;
+  }
+
+  td[contenteditable="true"] {
+    background:#fbfbfb;
+    cursor:text;
+  }
+
+  td.selected {
+    outline:3px solid #3498db;
+    background:#eaf6ff !important;
+  }
+
+  .controls {
+    text-align:center;
+    margin-top:14px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .btn {
+    padding:10px 16px;
+    border-radius:6px;
+    border:none;
+    cursor:pointer;
+    font-size:14px;
+    color:#fff;
+    flex: 1 1 auto;
+    min-width: 120px;
+    max-width: 150px;
+  }
+
+  .btn.save { background:#27ae60; }
+  .btn.reset { background:#c0392b; }
+  .btn.undo { background:#7f8c8d; }
+  .btn.merge { background:#2980b9; }
+  .btn.unmerge { background:#8e44ad; }
+  .btn.color { background:#e67e22; }
+
+  .note {
+    text-align:center;
+    color:#555;
+    margin-top:12px;
+    font-size:13px;
+  }
+
+  /* Responsif: skrin max 600px */
+  @media (max-width: 600px) {
+    h1 { font-size: 1.4rem; }
+    h2,h3 { font-size: 1rem; }
+
+    .tarikh { font-size: 18px; }
+
+    th, td { font-size: 12px; padding:6px; }
+
+    .btn {
+      min-width: 100px;
+      font-size: 13px;
+      padding:8px 12px;
+    }
+
+    .home {
+      font-size: 13px;
+      padding:6px 10px;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <h1 style="margin-top: 1em;">Jadual Mingguan Kuliah</h1>
+
+  <div class="bulan">
+    <p class="tarikh">September</p>
+    <p class="tarikh" style="margin-bottom: 3em;">22 - 26hb</p>
+
+  <table id="jadual">
+    <tr>
+      <th>Hari</th>
+      <th>7:30 - 8:30</th><th>8:30 - 9:30</th><th>9:30 - 10:30</th><th>10:30 - 11:30</th>
+      <th>11:30 - 12:30</th><th>12:30 - 13:30</th><th>13:30 - 14:30</th><th>14:30 - 15:30</th><th>15:30 - 16:30</th>
+    </tr>
+
+    <tr>
+      <td>Isnin</td>
+      <td contenteditable="true"></td><td contenteditable="true"></td>
+      <td contenteditable="true"></td><td contenteditable="true"></td>
+      <td contenteditable="true"></td><td contenteditable="true"></td>
+      <td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td>
+    </tr>
+
+    <tr>
+      <td>Selasa</td>
+      <td contenteditable="true"></td><td contenteditable="true"></td>
+      <td contenteditable="true"></td><td contenteditable="true"></td>
+      <td contenteditable="true"></td><td contenteditable="true"></td>
+      <td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td>
+    </tr>
+
+    <tr>
+      <td>Rabu</td>
+      <td contenteditable="true"></td><td contenteditable="true"></td>
+      <td contenteditable="true"></td><td contenteditable="true"></td>
+      <td contenteditable="true"></td><td contenteditable="true"></td>
+      <td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td>
+    </tr>
+
+    <tr>
+      <td>Khamis</td>
+      <td contenteditable="true"></td><td contenteditable="true"></td>
+      <td contenteditable="true"></td><td contenteditable="true"></td>
+      <td contenteditable="true"></td><td contenteditable="true"></td>
+      <td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td>
+    </tr>
+
+    <tr>
+      <td>Jumaat</td>
+      <td contenteditable="true"></td><td contenteditable="true"></td>
+      <td contenteditable="true"></td><td contenteditable="true"></td>
+      <td contenteditable="true"></td><td contenteditable="true"></td>
+      <td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td>
+    </tr>
+  </table>
+
+  <div class="controls">
+    <button class="btn save" onclick="saveTable()">💾 Save</button>
+     <!-- <button class="btn reset" onclick="resetTable()">♻️ Reset</button> -->
+    <button class="btn undo" onclick="undoAction()">↩️ Undo</button>
+    <button class="btn merge" onclick="mergeCells()">🔗 Merge</button>
+    <button class="btn unmerge" onclick="unmergeCells()">❌ Unmerge</button>
+    <button class="btn color" onclick="applyColor()">🎨 Warna</button>
+    <input id="colorPicker" type="color" value="#000000" />
+  </div>
+
+  <p class="note">
+    Cara: klik satu sel untuk pilih. Ctrl+klik untuk pilih banyak sel dari baris yang sama (untuk merge). <br>
+    Seleksi dibersihkan jika klik di luar jadual. Tekan Save supaya perubahan (termasuk merge & warna) kekal selepas reload.
+  </p>
+
+  <script>
+    const table = document.getElementById('jadual');
+    let selectedCells = [];           // array of currently selected TD nodes
+    let historyStack = [];            // array of HTML snapshots for undo (stores table.innerHTML)
+    const HISTORY_KEY = 'kuliahHistory_v2';
+    const TABLE_KEY   = 'kuliahTableHTML_v2';
+    const MAX_HISTORY = 60;
+
+    /* ------------------ Helpers ------------------ */
+    // pastikan setiap cell (kecuali first col) boleh diedit
+    function ensureEditable() {
+      Array.from(table.rows).forEach(row => {
+        Array.from(row.cells).forEach((cell, idx) => {
+          // index 0 is "Hari" — keep it non-editable
+          if (idx === 0) {
+            cell.removeAttribute('contenteditable');
+          } else {
+            cell.setAttribute('contenteditable', 'true');
+          }
+        });
+      });
+    }
+
+    // clear selection visuals & array
+    function clearSelection() {
+      selectedCells.forEach(c => c.classList && c.classList.remove('selected'));
+      selectedCells = [];
+    }
+
+    // save history snapshot (current HTML)
+    function pushHistory() {
+      const snap = table.innerHTML;
+      if (historyStack.length === 0 || historyStack[historyStack.length - 1] !== snap) {
+        historyStack.push(snap);
+        if (historyStack.length > MAX_HISTORY) historyStack.shift();
+        try { localStorage.setItem(HISTORY_KEY, JSON.stringify(historyStack)); } catch(e){}
+      }
+    }
+
+    function loadHistoryFromStorage() {
+      try {
+        const raw = localStorage.getItem(HISTORY_KEY);
+        if (raw) historyStack = JSON.parse(raw) || [];
+      } catch(e) { historyStack = []; }
+    }
+
+    // get array of cells in a row with their start/end column indexes (taking colspan into account)
+    function cellsWithPositions(row) {
+      const out = [];
+      let pos = 0;
+      const cells = Array.from(row.querySelectorAll('td, th'));
+      for (const c of cells) {
+        const span = c.colSpan || 1;
+        out.push({ cell: c, start: pos, end: pos + span - 1 });
+        pos += span;
+      }
+      return out;
+    }
+
+    /* ------------------ Selection handling ------------------ */
+    // click handler on table
+    table.addEventListener('click', function (e) {
+      const td = e.target.closest('td');
+      if (!td) return;
+      // only allow selecting editable cells (not the first column day header)
+      if (!td.hasAttribute('contenteditable')) return;
+
+      if (e.ctrlKey || e.metaKey) {
+        // toggle selection
+        if (selectedCells.includes(td)) {
+          td.classList.remove('selected');
+          selectedCells = selectedCells.filter(c => c !== td);
+        } else {
+          td.classList.add('selected');
+          selectedCells.push(td);
+        }
+      } else {
+        // single select
+        clearSelection();
+        td.classList.add('selected');
+        selectedCells = [td];
+      }
+    });
+
+    // clear selection when clicking outside the table
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest('#jadual') && !e.target.closest('.controls')) {
+        clearSelection();
+      }
+    });
+
+    // save history when user finishes editing a cell
+    table.addEventListener('focusout', function (e) {
+      const td = e.target.closest('td');
+      if (td && td.isContentEditable) pushHistory();
+    }, true);
+
+    /* ------------------ Save / Load / Reset ------------------ */
+    function saveTable() {
+      try {
+        // save full table HTML (keeps colspan & inline styles)
+        localStorage.setItem(TABLE_KEY, table.innerHTML);
+        pushHistory(); // snapshot current
+        alert('✅ Jadual disimpan. Merge & warna akan kekal selepas reload.');
+      } catch (err) {
+        alert('Gagal menyimpan: ' + err);
+      }
+    }
+
+    function loadTableOnStart() {
+      loadHistoryFromStorage();
+      const saved = localStorage.getItem(TABLE_KEY);
+      if (saved) {
+        table.innerHTML = saved;
+      }
+      ensureEditable();
+      // ensure at least one snapshot in history (current state)
+      pushHistory();
+      clearSelection();
+    }
+
+    function resetTable() {
+      if (!confirm('Adakah anda pasti mahu reset semua isi jadual?')) return;
+      pushHistory();
+      // clear all editable cells (preserve header row & day names)
+      Array.from(table.rows).forEach(row => {
+        Array.from(row.cells).forEach((cell, idx) => {
+          if (idx > 0) {
+            cell.innerHTML = '';
+            cell.style.color = '';
+            cell.colSpan = 1;
+          }
+        });
+      });
+      // rebuild uniform rows in case merges removed cells
+      rebuildStandardRowStructure();
+      ensureEditable();
+      localStorage.removeItem(TABLE_KEY);
+      try { localStorage.removeItem(HISTORY_KEY); } catch(e){}
+      historyStack = [];
+      pushHistory();
+      clearSelection();
+    }
+
+    // in case merges removed cells and rows have different cell counts, rebuild to original column count
+    function rebuildStandardRowStructure() {
+      const desiredCols = getHeaderColCount();
+      // for each row (skip header)
+      const rows = Array.from(table.rows).slice(1);
+      rows.forEach(row => {
+        // count current visual columns
+        let currentCols = 0;
+        const cells = Array.from(row.querySelectorAll('td, th'));
+        cells.forEach(c => currentCols += (c.colSpan || 1));
+        // while less than desired, append empty editable cell
+        while (currentCols < desiredCols) {
+          const newCell = document.createElement('td');
+          newCell.setAttribute('contenteditable', 'true');
+          row.appendChild(newCell);
+          currentCols++;
+        }
+        // if too many columns (shouldn't happen), do nothing
+      });
+    }
+
+    function getHeaderColCount() {
+      const headerRow = table.rows[0];
+      let total = 0;
+      Array.from(headerRow.cells).forEach(c => total += (c.colSpan || 1));
+      return total;
+    }
+
+    /* ------------------ Merge / Unmerge ------------------ */
+    function mergeCells() {
+      if (selectedCells.length < 2) {
+        alert('Pilih sekurang-kurangnya 2 sel (Ctrl+klik) dari baris yang sama untuk merge.');
+        return;
+      }
+
+      // ensure same row
+      const rows = selectedCells.map(c => c.parentElement);
+      if (!rows.every(r => r === rows[0])) {
+        alert('Sila pilih sel dari baris yang sama sahaja untuk merge.');
+        return;
+      }
+
+      const row = rows[0];
+      const posList = cellsWithPositions(row);
+
+      // compute minStart and maxEnd among selected cells
+      const selectedPosRanges = selectedCells.map(cell => {
+        const entry = posList.find(p => p.cell === cell);
+        return entry ? { start: entry.start, end: entry.end } : null;
+      });
+
+      if (selectedPosRanges.includes(null)) {
+        alert('Satu atau lebih sel terpilih tidak boleh digabung (struktur tidak disokong).');
+        return;
+      }
+
+      const minStart = Math.min(...selectedPosRanges.map(r => r.start));
+      const maxEnd   = Math.max(...selectedPosRanges.map(r => r.end));
+
+      // check contiguous coverage: every cell whose range overlaps minStart..maxEnd must be selected
+      const cellsInRange = posList.filter(p => !(p.end < minStart || p.start > maxEnd));
+      const allSelected = cellsInRange.every(p => selectedCells.includes(p.cell));
+      if (!allSelected) {
+        alert('Sila pilih semua sel dalam blok yang bersebelahan (tiada jurang).');
+        return;
+      }
+
+      // OK to merge: leftmost cell is the one with start === minStart
+      pushHistory();
+      const leftCellEntry = posList.find(p => p.start === minStart);
+      if (!leftCellEntry) { alert('Ralat semasa merge'); return; }
+      const leftCell = leftCellEntry.cell;
+      const totalSpan = maxEnd - minStart + 1;
+
+      // combine innerHTML left-to-right
+      const combinedHTML = cellsInRange.map(p => p.cell.innerHTML).join(' / ');
+      leftCell.innerHTML = combinedHTML;
+      leftCell.colSpan = totalSpan;
+
+      // remove all other cells in the range (right-to-left)
+      // find positions of cells to remove (skip the leftmost)
+      const toRemove = cellsInRange.filter(p => p.cell !== leftCell).map(p => p.cell);
+      toRemove.reverse().forEach(cell => cell.remove());
+
+      ensureEditable();
+      clearSelection();
+    }
+
+    function unmergeCells() {
+  if (selectedCells.length === 0) {
+    alert('Pilih sekurang-kurangnya satu sel yang merge untuk unmerge.');
+    return;
+  }
+
+  pushHistory();
+
+  selectedCells.forEach(cell => {
+    const span = cell.colSpan || 1;
+    if (span > 1) {
+      const content = cell.innerHTML;
+      cell.colSpan = 1;
+      // sisakan content di cell asal
+      let ref = cell;
+      for (let i = 1; i < span; i++) {
+        const newCell = document.createElement('td');
+        newCell.setAttribute('contenteditable', 'true');
+        newCell.innerHTML = ''; // kosongkan sel baru
+        ref.parentNode.insertBefore(newCell, ref.nextSibling);
+        ref = newCell;
+      }
+    }
+  });
+
+  ensureEditable();
+  clearSelection();
+}
+
+
+    /* ------------------ Color ------------------ */
+    function applyColor() {
+      if (selectedCells.length === 0) {
+        alert('Pilih sekurang-kurangnya satu sel untuk tukar warna.');
+        return;
+      }
+      pushHistory();
+      const color = document.getElementById('colorPicker').value;
+      selectedCells.forEach(c => c.style.color = color);
+      clearSelection();
+    }
+
+    /* ------------------ Undo ------------------ */
+    function undoAction() {
+      // need at least two snapshots (initial + current) to undo
+      loadHistoryFromStorage();
+      if (historyStack.length <= 1) {
+        alert('Tiada apa-apa untuk undo!');
+        return;
+      }
+      // pop current
+      historyStack.pop();
+      const last = historyStack[historyStack.length - 1] || '';
+      if (last) {
+        table.innerHTML = last;
+      } else {
+        // nothing
+      }
+      try { localStorage.setItem(HISTORY_KEY, JSON.stringify(historyStack)); } catch(e){}
+      ensureEditable();
+      clearSelection();
+    }
+
+    /* ------------------ Init on load ------------------ */
+    window.addEventListener('load', () => {
+      loadTableOnStart();
+      // re-bind safety: ensure editable & selection cleared
+      ensureEditable();
+      clearSelection();
+    });
+
+    // helper to ensure contenteditable for any dynamically created cells
+    // (call after operations that change DOM)
+    (function attachMutationObserver() {
+      // observe table and ensure new TDs are editable (except first column)
+      const mo = new MutationObserver(muts => {
+        // after small debounce, ensure editable
+        ensureEditable();
+      });
+      mo.observe(table, { childList: true, subtree: true, attributes: false });
+    })();
+
+  </script>
+</body>
+</html>
